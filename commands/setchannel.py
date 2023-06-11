@@ -1,6 +1,9 @@
 import os
 import json
 
+from utils import is_admin
+
+@is_admin()
 async def execute(message, args):
     # check if a argument was passed
     if len(args) == 0:
