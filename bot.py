@@ -34,7 +34,7 @@ async def send_message(message, user_message):
         logging.error(e)
 
 
-@tasks.loop(minutes=1) # one minute for testing
+@tasks.loop(minutes=5) # one minute for testing
 async def check_dca_levels(client):
     response = await command_modules['dca'].generate_dca_response()
 
@@ -51,23 +51,25 @@ async def check_dca_levels(client):
         f.write(response)
 
     # send only unique lines of the response to the channel
-    for line in response.split('\n'):
-        if line and line not in old_response.split('\n'):
-            logging.info(f"New line found: {line}")
-            # get channel id from channel.json
-            try:
-                with open('channel.json', 'r') as f:
-                    channel_id = json.load(f)['channel_id']
-            except (FileNotFoundError, IOError, KeyError):
-                logging.error("Failed to get channel ID.")
-                return
-            channel = client.get_channel(int(channel_id))
-            if channel is not None:
-                await channel.send(line)
-        else:
-            logging.info(f"No new lines found in response.")
+    new_lines = [line for line in response.split('\n') if line and line not in old_response.split('\n')]
+    if new_lines:
+        logging.info(f"New lines found: {new_lines}")
+        # get channel id from channel.json
+        try:
+            with open('channel.json', 'r') as f:
+                channel_id = json.load(f)['channel_id']
+        except (FileNotFoundError, IOError, KeyError):
+            logging.error("Failed to get channel ID.")
+            return
+        channel = client.get_channel(int(channel_id))
+        if channel is not None:
+            embed = discord.Embed(title="New Levels:", description="\n".join(new_lines), color=0x00ff00)
+            await channel.send(embed=embed)
+    else:
+        logging.info(f"No new lines found in response.")
 
     logging.info("Finished checking DCA levels.")
+
 
 
 
