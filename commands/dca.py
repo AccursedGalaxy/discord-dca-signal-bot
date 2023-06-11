@@ -1,11 +1,9 @@
 import requests
 import logging
-import asyncio
-import traceback
 from setup import coins, near_percentage
 from utils import loading_message
 
-from config.settings import DISCORD_TOKEN, CMC_API_KEY
+from config.settings import CMC_API_KEY
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger('discord').setLevel(logging.WARNING)
