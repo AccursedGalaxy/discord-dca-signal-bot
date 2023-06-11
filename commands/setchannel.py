@@ -27,5 +27,6 @@ async def execute(message, args):
     with open(filepath, 'w') as f:
         json.dump({'channel_id': channel_id}, f)
 
-    await message.channel.send(f'Successfully set the channel for signals to {channel.name}!')
-
+    # send a message to the channel specified by the user
+    await channel.send('This channel has been set for signals.')
+    await message.channel.send('Channel set for signals.')
