@@ -1,6 +1,7 @@
 import ccxt
 import logging
 from setup import exchanges, coins, near_percentage
+from utils import loading_message
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger('discord').setLevel(logging.WARNING)
@@ -45,6 +46,7 @@ async def generate_dca_response():
         logger.error(f"Could not generate DCA response: {e}")
         return None
 
+@loading_message
 async def execute(message, args):
     response = await generate_dca_response()
     await message.channel.send(response)
