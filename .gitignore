@@ -5,7 +5,6 @@
 .env
 
 # Ignore setup.py
-setup.py
 
 # Ignore compiled Python files
 *.pyc
