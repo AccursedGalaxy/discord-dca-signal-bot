@@ -10,10 +10,9 @@ def loading_message(func):
 def is_admin():
     def decorator(func):
         async def wrapper(message, args):
-            if message.author.guild_permissions.administrator:
+            if message.author.guild_permissions.manage_guild:
                 await func(message, args)
             else:
-                await message.channel.send("You must be an admin to use this command.")
+                await message.channel.send("You must have the 'Manage Server' permission to use this command.")
         return wrapper
     return decorator
-
