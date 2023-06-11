@@ -12,8 +12,9 @@ logging.getLogger('discord').setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 intents = discord.Intents.default()
-intents.members = True
+intents.message_content = True
 client = discord.Client(intents=intents)
+
 command_modules = {}
 
 
