@@ -15,4 +15,4 @@ __pycache__/
 
 # Ignore any other unnecessary files or directories
 output.txt
-
+channel.json
